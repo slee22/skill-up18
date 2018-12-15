@@ -155,9 +155,12 @@ public class DeviceScanActivity extends AppCompatActivity {
 
     private void goToDeviceDetail(){
         mProgressBar.setVisibility(View.GONE);
+
         Intent intent = new Intent(mActivity,DeviceDetailActivity.class);
         intent.putExtra(DeviceDetailActivity.EXTRA_DEVICE, mBluetoothDevice);
         mActivity.startActivity(intent);
+
+
     }
 
 

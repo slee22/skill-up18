@@ -12,11 +12,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,15 +26,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 
 import xuzhongwei.gunsecury.controllers.BLEController;
+import xuzhongwei.gunsecury.model.BLEDeviceDAO;
 import xuzhongwei.gunsecury.profile.AcceleroteProfile;
 import xuzhongwei.gunsecury.profile.AmbientTemperatureProfile;
 import xuzhongwei.gunsecury.profile.BarometerProfile;
@@ -43,15 +45,16 @@ import xuzhongwei.gunsecury.profile.IRTTemperature;
 import xuzhongwei.gunsecury.profile.LuxometerProfile;
 import xuzhongwei.gunsecury.profile.MovementProfile;
 import xuzhongwei.gunsecury.service.BluetoothLeService;
+import xuzhongwei.gunsecury.util.Adapter.DeviceScanResultAdapter;
 
-public class DeviceDetailActivity extends AppCompatActivity {
+public class DisplayActivity extends AppCompatActivity {
 
 
 
 
-    ///////////////////////////////////////////////////////////////////////////////////
-    BLEController mainController;
-    //    private String[] mPlanetTitles;
+///////////////////////////////////////////////////////////////////////////////////
+BLEController mainController;
+//    private String[] mPlanetTitles;
 //    private DrawerLayout mDrawerLayout;
 //    private ListView mDrawerList;
     private Activity mActivity;
@@ -68,7 +71,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
     public static final String EXTRA_DEVICE = "EXTRA_DEVICE";
 
 
-    private DeviceDetailActivity.UIHandler mUIHandler = new DeviceDetailActivity.UIHandler();
+    private DisplayActivity.UIHandler mUIHandler = new DisplayActivity.UIHandler();
     private BluetoothGatt mBtGatt = null;
     public ProgressDialog progressDialog;
 
@@ -77,7 +80,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
     private Boolean mIsSensorTag2 = false;
 
-    protected static DeviceDetailActivity mThis = null;
+    protected static DisplayActivity mThis = null;
 ///////////////////////////////////////////////////////////////////////////////////
 
     int KABI_IMAGE_SIZE_MAX = 100;
@@ -88,9 +91,6 @@ public class DeviceDetailActivity extends AppCompatActivity {
     int humi=50;
     //掃除
     int clean=1;
-
-    //最終掃除時刻
-    Calendar lastCleaning = Calendar.getInstance();
 
     int kabiIndex = 50;
     int tempIndex = 0;
@@ -177,6 +177,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
         size= KABI_IMAGE_SIZE_MAX * cleanIndex / 100;
         resize(imgViewKabiClean,size,size);
 
+        Log.v("****** check ******","rewrite");
     }
 
     public void addTemp(View view){
@@ -242,30 +243,19 @@ public class DeviceDetailActivity extends AppCompatActivity {
     }
 
 
-    public void setCleaningTime(){
-        lastCleaning = Calendar.getInstance();
-    }
-
-    public int calcPastTimeFromCleaning(){
-        Calendar now = Calendar.getInstance();
-        long diff = now.getTimeInMillis() - lastCleaning.getTimeInMillis();
-        //ひとまずデバッグ用に分を返す
-        return (int) diff / (1000 * 60);
-    }
-
 //////////////////////////////////////////////////////////////////////////////////////
 
     public boolean isSensorTag2() {
         return mIsSensorTag2;
     }
 
-    public static DeviceDetailActivity getInstance() {
-        return (DeviceDetailActivity) mThis;
+    public static DisplayActivity getInstance() {
+        return (DisplayActivity) mThis;
     }
 
 
     private void initialProgressBar(){
-        progressDialog = new ProgressDialog(DeviceDetailActivity.this);
+        progressDialog = new ProgressDialog(DisplayActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setIndeterminate(true);
         progressDialog.setTitle("Discovering Services");
@@ -294,7 +284,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
 */
     }
 
-    //いらなくなるはず
+//いらなくなるはず
 /*
     private void selectItem(int position) {
         mDrawerList.setItemChecked(position, true);
@@ -522,7 +512,9 @@ public class DeviceDetailActivity extends AppCompatActivity {
                                         hum.setmOnHumidityListener(new HumidityProfile.OnHumidityListener() {
                                             @Override
                                             public void onHumidityChanged(double data) {
+                                                //湿度の値を更新
                                                 setHumi((int)data);
+                                                //計算処理を実施
                                                 calcKabiIndex();
 //                                                ((TextView) mActivity.findViewById(R.id.humidityValue)).setText(data + "");
                                             }
@@ -604,11 +596,12 @@ public class DeviceDetailActivity extends AppCompatActivity {
                                             public void onDataChanged(String data) {
                                                 // dataの値はこんな感じ"17.3°C"なので、ピリオドでスプリットしてintに変換してしまう
                                                 // 多分温度は実数なので、実数変換後にintにキャスト
-                                                Log.v("****** temp ******", "[" + data + "]");
-                                                Log.v("****** temp ******", data);
+                                                //温度の値を更新
                                                 Log.v("****** temp ******", data.split("°C")[0]);
                                                 setTemp((int)Double.parseDouble(data.split("°C")[0]));
+                                                //計算処理を実施
                                                 calcKabiIndex();
+
 //                                                ((TextView) mActivity.findViewById(R.id.irTempratureValue)).setText(data);
                                             }
                                         });

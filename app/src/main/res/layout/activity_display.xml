@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DeviceDetailActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今のカビ指数は"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/kabiIndex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="20"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="%です。"
+            android:textSize="25dp" />
+
+    </LinearLayout>
+
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/kabiTemp"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:src="@drawable/kabi1"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+            <TextView
+                android:id="@+id/tempText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="温度:"
+                app:layout_constraintStart_toEndOf="@+id/kabiTemp"
+                app:layout_constraintTop_toTopOf="@+id/kabiTemp" />
+
+            <TextView
+                android:id="@+id/temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20"/>
+
+            <Button
+                android:id="@+id/button_subTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="subTemp"
+                android:text="-" />
+
+            <Button
+                android:id="@+id/button_addTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="addTemp"
+                android:text="+"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/kabiHumi"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/kabi2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/humiText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="湿度:"
+                app:layout_constraintStart_toEndOf="@+id/kabiHumi"
+                app:layout_constraintTop_toTopOf="@+id/kabiHumi" />
+
+            <TextView
+                android:id="@+id/humi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20"/>
+
+            <Button
+                android:id="@+id/button_subHumi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="subHumi"
+                android:text="-" />
+
+            <Button
+                android:id="@+id/button_addHumi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="addHumi"
+                android:text="+"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/kabiClean"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:adjustViewBounds="false"
+                android:src="@drawable/kabi3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/cleanText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="掃除後:"
+                app:layout_constraintStart_toEndOf="@+id/kabiClean"
+                app:layout_constraintTop_toTopOf="@+id/kabiClean" />
+
+            <TextView
+                android:id="@+id/clean"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20"/>
+
+            <Button
+                android:id="@+id/button_subClean"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="subClean"
+                android:text="-" />
+
+            <Button
+                android:id="@+id/button_addClean"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="addClean"
+                android:text="+"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </TableLayout>
+
+
+</android.support.constraint.ConstraintLayout>
