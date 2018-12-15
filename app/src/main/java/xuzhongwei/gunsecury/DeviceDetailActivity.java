@@ -112,6 +112,8 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
     public void calcKabiIndex(){
 
+        calcPastTimeFromCleaning();
+
         ImageView imgViewKabiTemp = (ImageView)findViewById(R.id.kabiTemp);
         ImageView imgViewKabiHumi = (ImageView)findViewById(R.id.kabiHumi);
         ImageView imgViewKabiClean = (ImageView)findViewById(R.id.kabiClean);
@@ -242,15 +244,15 @@ public class DeviceDetailActivity extends AppCompatActivity {
     }
 
 
-    public void setCleaningTime(){
+    public void setCleaningTime(View view){
         lastCleaning = Calendar.getInstance();
     }
 
-    public int calcPastTimeFromCleaning(){
+    public void calcPastTimeFromCleaning(){
         Calendar now = Calendar.getInstance();
         long diff = now.getTimeInMillis() - lastCleaning.getTimeInMillis();
         //ひとまずデバッグ用に分を返す
-        return (int) diff / (1000 * 60);
+        setClean ((int) diff / (1000 * 60));
     }
 
 //////////////////////////////////////////////////////////////////////////////////////
