@@ -29,6 +29,7 @@
                 android:fontFamily="cursive"
                 android:text="重山晃太のパピー"
                 android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="#000000"
                 android:textSize="24sp"/>
             <TextView
                 android:id="@+id/deviceAddrress"
@@ -39,6 +40,7 @@
                 android:fontFamily="cursive"
                 android:text="UUID:9856473948562456"
                 android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="#000000"
                 android:textSize="12sp"/>
         </LinearLayout>
 
