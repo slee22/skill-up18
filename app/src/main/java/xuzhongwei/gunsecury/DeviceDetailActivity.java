@@ -285,11 +285,11 @@ public class DeviceDetailActivity extends AppCompatActivity {
     }
 
     public void addTemp(View view){
-        temp = temp + 2;
+        temp = temp + 1;
         calcKabiIndex();
     }
     public void subTemp(View view){
-        temp = temp - 2;
+        temp = temp - 1;
         calcKabiIndex();
     }
     public void addHumi(View view){
