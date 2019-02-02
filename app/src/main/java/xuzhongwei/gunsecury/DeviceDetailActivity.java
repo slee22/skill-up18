@@ -350,6 +350,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
     public void setCleaningTime(View view){
         lastCleaning = Calendar.getInstance();
+        calcKabiIndex();
     }
 
     public void calcPastTimeFromCleaning(){
