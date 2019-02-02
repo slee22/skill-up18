@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">カビ対策機能付きバスタブトレー用アプリ</string>
-    <string name="welcome_slogan">IoTの世界へようこそ</string>
+    <string name="welcome_slogan">プロトタイプの動作確認へ</string>
     <string name="scan_string">まわりの端末からIOTセンサーを探そう!</string>
     <string name="scaning_string">接続中</string>
     <string name="scaning_complete_string">接続完了!</string>
