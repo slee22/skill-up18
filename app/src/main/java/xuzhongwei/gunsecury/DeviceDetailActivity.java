@@ -293,11 +293,11 @@ public class DeviceDetailActivity extends AppCompatActivity {
         calcKabiIndex();
     }
     public void addHumi(View view){
-        humi = humi + 20;
+        humi = humi + 5;
         calcKabiIndex();
     }
     public void subHumi(View view){
-        humi = humi - 20;
+        humi = humi - 5;
         calcKabiIndex();
     }
     public void addClean(View view){
