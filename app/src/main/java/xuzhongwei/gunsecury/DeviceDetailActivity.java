@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -108,6 +109,8 @@ public class DeviceDetailActivity extends AppCompatActivity {
     int humiIndex = 0;
     int cleanIndex = 0;
 
+    Button debugButton;
+    private boolean debugFlag = false;
 
     public void setTemp(int t){
         temp = t;
@@ -119,6 +122,16 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
     public void setClean(int c){
         clean = c;
+    }
+
+    public void toggleDebug(View view) {
+        debugButton = (Button)findViewById(R.id.button_debug);
+        debugFlag = !debugFlag;
+        if (debugFlag) {
+            debugButton.setText("ON");
+        } else {
+            debugButton.setText("OFF");
+        }
     }
 
     public void setGraphs() {
@@ -618,8 +631,10 @@ public class DeviceDetailActivity extends AppCompatActivity {
                                         hum.setmOnHumidityListener(new HumidityProfile.OnHumidityListener() {
                                             @Override
                                             public void onHumidityChanged(double data) {
-                                                setHumi((int)data);
-                                                calcKabiIndex();
+                                                if (!debugFlag) {
+                                                    setHumi((int) data);
+                                                    calcKabiIndex();
+                                                }
 //                                                ((TextView) mActivity.findViewById(R.id.humidityValue)).setText(data + "");
                                             }
                                         });
@@ -703,8 +718,10 @@ public class DeviceDetailActivity extends AppCompatActivity {
                                                 Log.v("****** temp ******", "[" + data + "]");
                                                 Log.v("****** temp ******", data);
                                                 Log.v("****** temp ******", data.split("°C")[0]);
-                                                setTemp((int)Double.parseDouble(data.split("°C")[0]));
-                                                calcKabiIndex();
+                                                if (!debugFlag) {
+                                                    setTemp((int)Double.parseDouble(data.split("°C")[0]));
+                                                    calcKabiIndex();
+                                                }
 //                                                ((TextView) mActivity.findViewById(R.id.irTempratureValue)).setText(data);
                                             }
                                         });
