@@ -79,23 +79,25 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
     protected static DeviceDetailActivity mThis = null;
 ///////////////////////////////////////////////////////////////////////////////////
+    // カビの発生条件
+    // 温度(temperature): 20度以上30度未満
+    // 湿度(humidity): 70%以上
+    // 栄養: 掃除の頻度
 
     int KABI_IMAGE_SIZE_MAX = 100;
 
-    //温度
-    int temp=20;
-    //湿度
-    int humi=50;
-    //掃除
-    int clean=1;
+    int temp = 20;      //温度
+    int humi = 70;      //湿度
+    int clean = 24;     //掃除
 
     //最終掃除時刻
     Calendar lastCleaning = Calendar.getInstance();
 
     int kabiIndex = 50;
     int tempIndex = 0;
-    int humiIndex =0;
+    int humiIndex = 0;
     int cleanIndex = 0;
+
 
     public void setTemp(int t){
         temp = t;
@@ -121,10 +123,18 @@ public class DeviceDetailActivity extends AppCompatActivity {
         TextView textTemp = (TextView)findViewById(R.id.temp);
         TextView textHumi = (TextView)findViewById(R.id.humi);
         TextView textClean = (TextView)findViewById(R.id.clean);
+        TextView textTemp_index = (TextView)findViewById(R.id.temp_index);
+        TextView textHumi_index = (TextView)findViewById(R.id.humi_index);
+        TextView textClean_index = (TextView)findViewById(R.id.clean_index);
+
 
         //カビ指数(温度) 25度(20-30度の中間)からの温度差を2乗して100から引く。10以下になったら10にする。
         tempIndex = 100 - (25 - temp)*(25 - temp);
         tempIndex = tempIndex < 10 ? 10 : tempIndex;
+
+        tempIndex = 100 - (25 - temp)*(25 - temp);
+        tempIndex = tempIndex < 10 ? 10 : tempIndex;
+
 
         //カビ指数(湿度) 0～70→10～100になるよう変換。100以上は100に切り下げ
         humiIndex = humi * 90 / 70 + 10;
@@ -165,44 +175,49 @@ public class DeviceDetailActivity extends AppCompatActivity {
         textKabiIndex.setText(String.valueOf(kabiIndex));
         textKabiIndex.setTextColor(kabiColor);
 
-        textTemp.setText(String.valueOf(temp)+"℃("+String.valueOf(tempIndex)+")");
-        textHumi.setText(String.valueOf(humi)+"％("+String.valueOf(humiIndex)+")");
-        textClean.setText(String.valueOf(clean)+"時間("+String.valueOf(cleanIndex)+")");
+        textTemp.setText(String.valueOf(temp) + "℃");
+        textHumi.setText(String.valueOf(humi) + "％");
+        textClean.setText(String.valueOf(clean) + "Ｈ");
+
+        textTemp_index.setText(String.valueOf(tempIndex));
+        textHumi_index.setText(String.valueOf(humiIndex));
+        textClean_index.setText(String.valueOf(cleanIndex));
+
 
         //画像のサイズをカビ指数に合わせて変更
         int size;
         //画像のサイズを更新
         size= KABI_IMAGE_SIZE_MAX * tempIndex / 100;
-        resize(imgViewKabiTemp,size,size);
+        resize(imgViewKabiTemp,size, size);
         size= KABI_IMAGE_SIZE_MAX * humiIndex / 100;
-        resize(imgViewKabiHumi,size,size);
+        resize(imgViewKabiHumi,size, size);
         size= KABI_IMAGE_SIZE_MAX * cleanIndex / 100;
-        resize(imgViewKabiClean,size,size);
+        resize(imgViewKabiClean,size, size);
 
     }
 
     public void addTemp(View view){
-        temp = temp + 1;
+        temp = temp + 2;
         calcKabiIndex();
     }
     public void subTemp(View view){
-        temp = temp - 1;
+        temp = temp - 2;
         calcKabiIndex();
     }
     public void addHumi(View view){
-        humi = humi + 1;
+        humi = humi + 20;
         calcKabiIndex();
     }
     public void subHumi(View view){
-        humi = humi - 1;
+        humi = humi - 20;
         calcKabiIndex();
     }
     public void addClean(View view){
-        clean = clean + 1;
+        clean = clean + 4;
         calcKabiIndex();
     }
     public void subClean(View view){
-        clean = clean - 1;
+        clean = clean - 4;
         calcKabiIndex();
     }
 
@@ -252,7 +267,10 @@ public class DeviceDetailActivity extends AppCompatActivity {
         Calendar now = Calendar.getInstance();
         long diff = now.getTimeInMillis() - lastCleaning.getTimeInMillis();
         //ひとまずデバッグ用に分を返す
-        setClean ((int) diff / (1000 * 60));
+        //setClean ((int) diff / (1000 * 60));
+
+        //デバッグ用に秒を返す
+        setClean ((int) diff / (1000));
     }
 
 //////////////////////////////////////////////////////////////////////////////////////
