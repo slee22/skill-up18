@@ -28,6 +28,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -90,6 +95,11 @@ public class DeviceDetailActivity extends AppCompatActivity {
     int humi = 70;      //湿度
     int clean = 24;     //掃除
 
+    private GraphView tempGraph;
+    private GraphView humiGraph;
+    private LineGraphSeries<DataPoint> tempSeries= new LineGraphSeries<>();
+    private LineGraphSeries<DataPoint> humiSeries= new LineGraphSeries<>();
+    private double graphLastXValue = 0;
     //最終掃除時刻
     Calendar lastCleaning = Calendar.getInstance();
 
@@ -111,6 +121,71 @@ public class DeviceDetailActivity extends AppCompatActivity {
         clean = c;
     }
 
+    public void setGraphs() {
+        Log.d("setGraph",String.valueOf(temp));
+        tempGraph = (GraphView) findViewById(R.id.tempGraph);
+        humiGraph = (GraphView) findViewById(R.id.humiGraph);
+
+        tempGraph.getViewport().setYAxisBoundsManual(true);
+        tempGraph.getViewport().setMinY(0);
+        tempGraph.getViewport().setMaxY(60);
+
+        tempGraph.getViewport().setXAxisBoundsManual(true);
+        tempGraph.getViewport().setMinX(0);
+        tempGraph.getViewport().setMaxX(22);
+
+        tempGraph.getViewport().setScrollable(true);
+
+        tempGraph.addSeries(tempSeries);
+        tempGraph.setTitle("温度");
+        tempGraph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+        GridLabelRenderer tempGridLabel = tempGraph.getGridLabelRenderer();
+        tempGridLabel.setVerticalAxisTitle("℃");
+
+
+        humiGraph.getViewport().setYAxisBoundsManual(true);
+        humiGraph.getViewport().setMinY(20);
+        humiGraph.getViewport().setMaxY(60);
+
+        humiGraph.getViewport().setXAxisBoundsManual(true);
+        humiGraph.getViewport().setMinX(0);
+        humiGraph.getViewport().setMaxX(22);
+
+        humiGraph.getViewport().setScrollable(true);
+
+        humiGraph.addSeries(humiSeries);
+        humiGraph.setTitle("湿度");
+        humiGraph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+        GridLabelRenderer humiGridLabel = humiGraph.getGridLabelRenderer();
+        humiGridLabel.setVerticalAxisTitle("%");
+
+        addGraphData();
+    }
+
+    public void addGraphData() {
+        Log.d("addGraph",String.valueOf(temp));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                    }
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            boolean scrollToEnd = graphLastXValue > 24 ? true : false;
+                            tempSeries.appendData(new DataPoint(graphLastXValue, temp), scrollToEnd, 100);
+                            humiSeries.appendData(new DataPoint(graphLastXValue, humi), scrollToEnd, 100);
+                            graphLastXValue += 1;
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
 
     public void calcKabiIndex(){
 
@@ -256,6 +331,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
         mThis = this;
 //////////////////////////////////////////////////////////////////////////////////////
         calcKabiIndex();
+        setGraphs();
     }
 
 

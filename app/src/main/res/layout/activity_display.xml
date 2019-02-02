@@ -371,22 +371,50 @@
             </TableRow>
         </TableLayout>
 
-        <View
-            android:id="@+id/divider3"
-            android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:background="?android:attr/listDivider" />
+        <!--<View-->
+        <!--android:id="@+id/divider3"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="15dp"-->
+        <!--android:background="?android:attr/listDivider"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/tempGraph" />-->
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="【動作テスト】"
-            android:textAlignment="center" />
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/tempGraph"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/humiGraph"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/humiGraph"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tempGraph" />
+
+
+        <!--<TextView-->
+        <!--android:id="@+id/textView14"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="0dp"-->
+        <!--android:text="【動作テスト】"-->
+        <!--android:textAlignment="center"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/humiGraph" />-->
 
         <TableLayout
+            android:id="@+id/table1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:padding="@dimen/default_gap">
 
             <TableRow
@@ -400,7 +428,7 @@
             </TableRow>
 
             <TableRow
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
                 <TextView
@@ -409,36 +437,31 @@
                     android:layout_height="wrap_content"
                     android:text="温度" />
 
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <!--<Space-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
 
                 <Button
                     android:id="@+id/button_subTemp"
-                    android:layout_width="match_parent"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:onClick="subTemp"
                     android:text="-"
-                    android:textSize="24sp" />
+                    android:textSize="12sp" />
 
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <!--<Space-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
 
                 <Button
                     android:id="@+id/button_addTemp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:onClick="addTemp"
                     android:text="+"
-                    android:textSize="24sp"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/textView16"
@@ -446,91 +469,91 @@
                     android:layout_height="wrap_content"
                     android:text="湿度" />
 
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <!--<Space-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
 
                 <Button
                     android:id="@+id/button_subHumi"
-                    android:layout_width="match_parent"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:onClick="subHumi"
                     android:text="-"
-                    android:textSize="24sp" />
+                    android:textSize="12sp" />
 
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <!--<Space-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
 
                 <Button
                     android:id="@+id/button_addHumi"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:onClick="addHumi"
                     android:text="+"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="invisible">
-
-                <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="栄養" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/button_subClean"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:onClick="subClean"
-                    android:text="-"
-                    android:textSize="24sp" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/button_addClean"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="addClean"
-                    android:text="+"
-                    android:textSize="24sp"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </TableRow>
+
+
+            <!--<TableRow-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:visibility="invisible">-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/textView17"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="栄養" />-->
+
+            <!--<Space-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+
+            <!--<Button-->
+            <!--android:id="@+id/button_subClean"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:onClick="subClean"-->
+            <!--android:text="-"-->
+            <!--android:textSize="24sp" />-->
+
+            <!--<Space-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+
+            <!--<Button-->
+            <!--android:id="@+id/button_addClean"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="addClean"-->
+            <!--android:text="+"-->
+            <!--android:textSize="24sp"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent" />-->
+            <!--</TableRow>-->
 
         </TableLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-            android:gravity="center|bottom"
-            android:orientation="vertical">
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dip"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center|bottom"-->
+        <!--android:orientation="vertical">-->
 
-            <Button
-                android:id="@+id/button_cleaning"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="setCleaningTime"
-                android:text="お風呂を掃除し終えました！"
-                android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/button_cleaning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="setCleaningTime"
+            android:text="お風呂を掃除し終えました！"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        <!--</LinearLayout>-->
 
     </LinearLayout>
 
